@@ -11,12 +11,28 @@ export interface NavLink {
 }
 
 export interface SiteContent {
+  meta: { title: string; description: string }
+  skipLink: string
   logo: { name: string; tld: string; label: string }
   nav: { ariaLabel: string; menuOpen: string; menuClose: string; links: NavLink[] }
   theme: { groupLabel: string; options: { value: ThemeChoice; label: string }[] }
-  footer: { note: string; backToTop: string }
-  notFound: { code: string; command: string; error: string; title: string; text: string; cta: string }
-  projectPage: { back: string; notFoundTitle: string }
+  footer: {
+    madeWith: string
+    linksLabel: string
+    repoLabel: string
+    repoUrl: string
+    newTab: string
+    backToTop: string
+  }
+  notFound: {
+    panelTitle: string
+    panelSubtitle: string
+    title: string
+    command: string
+    error: string
+    text: string
+    cta: string
+  }
 }
 
 /* ---------- Perfil ---------- */
@@ -74,6 +90,8 @@ export interface ProjectImage {
   title: string
   alt: string
   annotations: Annotation[]
+  /** La captura ya incluye su propia barra de navegador: no se dibuja otra encima */
+  hasChrome?: boolean
 }
 
 export interface Project {

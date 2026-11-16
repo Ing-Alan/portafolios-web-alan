@@ -1,3 +1,5 @@
+import { site } from '@/data/site'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { Hero } from '@/sections/Hero'
 import { Projects } from '@/sections/Projects'
 import { About } from '@/sections/About'
@@ -8,6 +10,7 @@ import { Social } from '@/sections/Social'
 import { Contact } from '@/sections/Contact'
 
 export function Home() {
+  useDocumentMeta(site.meta.title, site.meta.description)
   return (
     <>
       <Hero />

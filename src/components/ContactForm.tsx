@@ -101,7 +101,7 @@ export function ContactForm() {
   }, [status])
 
   const inputCls = (f: Field) =>
-    `w-full rounded-[10px] border bg-surface-2 px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/80 transition-colors focus-visible:border-accent ${
+    `w-full rounded-[10px] border bg-surface-2 px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted transition-colors focus-visible:border-accent ${
       show(f) ? 'border-err' : 'border-rule hover:border-muted'
     }`
 

@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useInView, useReducedMotion } from 'framer-motion'
 import type { Annotation, ProjectImage } from '@/data/types'
+import { useElementSize } from '@/hooks/useElementSize'
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v))
 
@@ -31,18 +32,21 @@ export function AnnotatedShot({ image, urlLabel, zoomLabel, annotationsLabel, on
   const inView = useInView(ref, { once: true, amount: 0.35 })
   const reduce = useReducedMotion() ?? false
   const show = reduce || inView
+  const { width, height } = useElementSize(ref)
   const delayOf = (i: number) => 0.15 + i * 0.3
 
   return (
     <figure className="m-0">
       <div className="blueprint rounded-[14px] border border-rule p-[clamp(10px,3.5vw,40px)]">
         <div className="overflow-hidden rounded-[10px] border border-rule bg-surface shadow-[0_30px_60px_-40px_rgba(5,20,45,.55)]">
-          <div className="browser-bar" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-            <span>{urlLabel}</span>
-          </div>
+          {!image.hasChrome && (
+            <div className="browser-bar" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+              <span>{urlLabel}</span>
+            </div>
+          )}
 
           <div ref={ref} className="relative">
             <button
@@ -65,34 +69,39 @@ export function AnnotatedShot({ image, urlLabel, zoomLabel, annotationsLabel, on
             </button>
 
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-              {/* Líneas (solo escritorio) */}
-              <svg
-                className="absolute inset-0 hidden h-full w-full overflow-visible lg:block"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-              >
-                {image.annotations.map((a, i) => {
-                  const l = labelPos(a)
-                  return (
-                    <line
-                      key={i}
-                      x1={l.x}
-                      y1={l.y}
-                      x2={a.x}
-                      y2={a.y}
-                      pathLength={1}
-                      stroke="var(--line)"
-                      strokeWidth={1.5}
-                      vectorEffect="non-scaling-stroke"
-                      style={{
-                        strokeDasharray: 1,
-                        strokeDashoffset: show ? 0 : 1,
-                        transition: reduce ? 'none' : `stroke-dashoffset .8s cubic-bezier(.22,1,.36,1) ${delayOf(i)}s`,
-                      }}
-                    />
-                  )
-                })}
-              </svg>
+              {/* Líneas (solo escritorio). SVG en píxeles reales: el largo de cada línea
+                  es exacto y el trazo con stroke-dashoffset se dibuja sin cortes. */}
+              {width > 0 && (
+                <svg
+                  className="absolute inset-0 hidden h-full w-full overflow-visible lg:block"
+                  viewBox={`0 0 ${width} ${height}`}
+                >
+                  {image.annotations.map((a, i) => {
+                    const l = labelPos(a)
+                    const x1 = (l.x / 100) * width
+                    const y1 = (l.y / 100) * height
+                    const x2 = (a.x / 100) * width
+                    const y2 = (a.y / 100) * height
+                    const len = Math.ceil(Math.hypot(x2 - x1, y2 - y1))
+                    return (
+                      <line
+                        key={i}
+                        x1={x1}
+                        y1={y1}
+                        x2={x2}
+                        y2={y2}
+                        stroke="var(--line)"
+                        strokeWidth={1.5}
+                        style={{
+                          strokeDasharray: len,
+                          strokeDashoffset: show ? 0 : len,
+                          transition: reduce ? 'none' : `stroke-dashoffset .8s cubic-bezier(.22,1,.36,1) ${delayOf(i)}s`,
+                        }}
+                      />
+                    )
+                  })}
+                </svg>
+              )}
 
               {/* Puntos numerados */}
               {image.annotations.map((a, i) => (

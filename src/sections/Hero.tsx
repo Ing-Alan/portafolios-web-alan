@@ -86,8 +86,16 @@ function Terminal({ start, instant }: { start: boolean; instant: boolean }) {
   )
 }
 
+/** La secuencia de entrada se reproduce una sola vez por visita (no al volver desde un proyecto). */
+let introPlayed = false
+
 export function Hero() {
-  const reduce = useReducedMotion() ?? false
+  const prefersReduced = useReducedMotion() ?? false
+  const [skipIntro] = useState(() => introPlayed)
+  useEffect(() => {
+    introPlayed = true
+  }, [])
+  const reduce = prefersReduced || skipIntro
   const mobile = useMediaQuery('(max-width: 820px)')
   const countersOn = useAfter(T.counters, reduce)
   const terminalOn = useAfter(T.terminal, reduce)
@@ -100,7 +108,7 @@ export function Hero() {
 
   return (
     <section id="inicio" aria-labelledby="hero-title" className="relative overflow-hidden border-b border-rule bg-hero">
-      <Nanduti {...nd} spokes={40} rings={7} duration={2600} />
+      <Nanduti {...nd} spokes={40} rings={7} duration={2600} weaveOnMount={!skipIntro} />
 
       <div className="container-x relative grid items-center gap-[clamp(28px,4vw,56px)] pb-[clamp(40px,6vw,80px)] pt-[clamp(32px,5vw,72px)] nav:grid-cols-[1.1fr_.9fr]">
         <motion.div variants={textGroup} initial={reduce ? false : 'hidden'} animate="show">

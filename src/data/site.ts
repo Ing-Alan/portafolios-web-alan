@@ -1,7 +1,13 @@
 import type { SiteContent } from './types'
 
-/** Textos de la estructura del sitio: navegación, footer, tema y páginas de sistema. */
+/** Textos de la estructura del sitio: navegación, footer, tema, metadatos y páginas de sistema. */
 export const site: SiteContent = {
+  meta: {
+    title: 'Alan Alvarenga · Desarrollador Full Stack',
+    description:
+      'Portafolio de Alan Alvarenga, desarrollador full stack y supervisor de sistemas en producción en Areguá, Paraguay. Sistemas de gestión web seguros, de la base de datos al despliegue.',
+  },
+  skipLink: 'Saltar al contenido',
   logo: { name: 'alan', tld: 'dev', label: 'alan.dev — ir al inicio' },
   nav: {
     ariaLabel: 'Navegación principal',
@@ -23,19 +29,20 @@ export const site: SiteContent = {
     ],
   },
   footer: {
-    note: 'Hecho en Areguá, Paraguay.',
+    madeWith: 'Hecho con React, TypeScript y Tailwind · Areguá, Paraguay',
+    linksLabel: 'Enlaces del footer',
+    repoLabel: 'Código del portafolio',
+    repoUrl: 'https://github.com/Ing-Alan/portafolios-web-alan',
+    newTab: '(se abre en una pestaña nueva)',
     backToTop: 'Volver arriba ↑',
   },
   notFound: {
-    code: '404',
-    command: 'cd ',
-    error: 'error: ruta no encontrada',
+    panelTitle: 'terminal',
+    panelSubtitle: 'alan.dev',
     title: 'Esta página no existe',
+    command: 'cd ',
+    error: 'error 404 · página no encontrada',
     text: 'Puede que el enlace esté mal escrito o que la página se haya movido. Mirá los proyectos desde el inicio.',
     cta: 'Volver al inicio',
-  },
-  projectPage: {
-    back: '← Volver a proyectos',
-    notFoundTitle: 'Proyecto no encontrado',
   },
 }

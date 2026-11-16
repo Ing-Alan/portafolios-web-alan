@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { site } from '@/data/site'
 import { Navbar } from './Navbar'
 import { Footer } from './Footer'
 
@@ -25,9 +26,21 @@ function ScrollManager() {
 export function Layout() {
   return (
     <div className="flex min-h-dvh flex-col">
+      <a
+        href="#contenido"
+        onClick={(e) => {
+          e.preventDefault()
+          const main = document.getElementById('contenido')
+          main?.focus()
+          main?.scrollIntoView({ block: 'start' })
+        }}
+        className="btn btn-pri fixed left-3 top-3 z-[60] -translate-y-[150%] focus-visible:translate-y-0"
+      >
+        {site.skipLink}
+      </a>
       <ScrollManager />
       <Navbar />
-      <main id="contenido" className="flex-1">
+      <main id="contenido" tabIndex={-1} className="flex-1 outline-none">
         <Outlet />
       </main>
       <Footer />

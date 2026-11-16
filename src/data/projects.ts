@@ -217,11 +217,13 @@ export const projects: Project[] = [
     confidentiality: CONFIDENTIALITY,
     images: [
       shot('vacaciones-y-permisos', '01-acceso', 1600, 659, {
+        hasChrome: true,
         title: 'Ingreso',
         alt: 'Pantalla de inicio de sesión del sistema de vacaciones y permisos, con campo de correo institucional y contraseña.',
         annotations: [{ text: 'Acceso con correo institucional', x: 70, y: 48, lx: 82, ly: 30 }],
       }),
       shot('vacaciones-y-permisos', '02-panel-solicitante', 1600, 955, {
+        hasChrome: true,
         title: 'Panel del solicitante',
         alt: 'Panel del solicitante con un calendario mensual que distingue días hábiles y no laborables, una tabla de períodos con días otorgados y disponibles, y la lista de sus solicitudes con su estado.',
         annotations: [
@@ -238,11 +240,13 @@ export const projects: Project[] = [
         ],
       }),
       shot('vacaciones-y-permisos', '04-bandeja-jefe', 1600, 909, {
+        hasChrome: true,
         title: 'Bandeja del jefe',
         alt: 'Bandeja del jefe inmediato con las solicitudes pendientes de su equipo y botones para autorizar o rechazar, sus últimas autorizaciones y las próximas ausencias del equipo.',
         annotations: [{ text: 'Cada jefe ve solo a su equipo (RLS)', x: 45, y: 46, lx: 78, ly: 13 }],
       }),
       shot('vacaciones-y-permisos', '05-revision-rrhh', 1600, 801, {
+        hasChrome: true,
         title: 'Revisión de RRHH',
         alt: 'Detalle de una solicitud aprobada por el jefe y pendiente de RRHH, con los días a descontar, el período afectado y una línea de tiempo con cada paso de la aprobación.',
         annotations: [
@@ -251,6 +255,7 @@ export const projects: Project[] = [
         ],
       }),
       shot('vacaciones-y-permisos', '06-configuracion', 1600, 1320, {
+        hasChrome: true,
         title: 'Configuración',
         alt: 'Configuración de RRHH con la tabla de tipos de solicitud, si descuentan vacaciones y si requieren adjunto, un formulario para crear un tipo nuevo, la tabla de días por antigüedad y los días no laborables.',
         annotations: [
