@@ -30,6 +30,23 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!--
+      Copia estática del formulario de contacto para que Netlify Forms lo detecte en el build
+      (la app es una SPA y el formulario real lo renderiza React). Mismo nombre y campos.
+    -->
+    <form name="contacto" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="nombre" />
+      <input type="email" name="email" />
+      <select name="tipo">
+        <option value="Proyecto o sistema">Proyecto o sistema</option>
+        <option value="Oportunidad laboral">Oportunidad laboral</option>
+        <option value="Colaboración social">Colaboración social</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <textarea name="mensaje"></textarea>
+      <input name="bot-field" />
+    </form>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

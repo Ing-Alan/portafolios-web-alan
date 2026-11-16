@@ -143,10 +143,19 @@ export interface SocialCommitment {
 
 /* ---------- Contacto ---------- */
 
+export interface InquiryType {
+  /** Valor corto para la URL (?tipo=social) */
+  id: string
+  /** Texto visible y valor que se envía en el formulario */
+  label: string
+}
+
 export interface ContactInfo {
   whatsapp: { display: string; number: string; message: string; href: string }
   email: { address: string; href: string }
   linkedin: { label: string; href: string }
   github: { label: string; href: string }
-  inquiryTypes: string[]
+  inquiryTypes: InquiryType[]
+  /** Nombre del formulario en Netlify Forms (debe coincidir con el formulario oculto de index.html) */
+  formName: string
 }

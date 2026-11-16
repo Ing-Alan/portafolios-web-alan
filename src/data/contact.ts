@@ -23,5 +23,11 @@ export const contact: ContactInfo = {
     label: 'Ing-Alan',
     href: 'https://github.com/Ing-Alan',
   },
-  inquiryTypes: ['Proyecto o sistema', 'Oportunidad laboral', 'Colaboración social', 'Otro'],
+  inquiryTypes: [
+    { id: 'proyecto', label: 'Proyecto o sistema' },
+    { id: 'laboral', label: 'Oportunidad laboral' },
+    { id: 'social', label: 'Colaboración social' },
+    { id: 'otro', label: 'Otro' },
+  ],
+  formName: 'contacto',
 }

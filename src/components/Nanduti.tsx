@@ -25,6 +25,8 @@ export interface NandutiProps {
   duration?: number
   /** Tejer al montar; si es false se dibuja completo */
   weaveOnMount?: boolean
+  /** Esperar a que el ñandutí entre en pantalla para tejerlo (una sola vez). Tiene prioridad sobre weaveOnMount. */
+  weaveInView?: boolean
   className?: string
   ref?: Ref<NandutiHandle>
 }
@@ -50,6 +52,7 @@ export function Nanduti({
   radiusMode = 'min',
   duration = 2600,
   weaveOnMount = true,
+  weaveInView = false,
   className = '',
   ref,
 }: NandutiProps) {
@@ -57,7 +60,7 @@ export function Nanduti({
   const geoRef = useRef<NandutiGeometry | null>(null)
   const dprRef = useRef(1)
   const colorRef = useRef('')
-  const progressRef = useRef(weaveOnMount ? 0 : 1)
+  const progressRef = useRef(weaveOnMount || weaveInView ? 0 : 1)
   const rafRef = useRef(0)
 
   // Valores actuales accesibles desde callbacks estables
@@ -171,6 +174,23 @@ export function Nanduti({
 
   // Tejido inicial (solo al montar)
   useEffect(() => {
+    const c = canvasRef.current
+    if (weaveInView && c) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect()
+            weave()
+          }
+        },
+        { threshold: 0.25 },
+      )
+      io.observe(c)
+      return () => {
+        io.disconnect()
+        stop()
+      }
+    }
     if (weaveOnMount) weave()
     else {
       progressRef.current = 1
