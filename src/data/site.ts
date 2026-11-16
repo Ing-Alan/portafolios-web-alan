@@ -1,5 +1,8 @@
 import type { SiteContent } from './types'
 
+/** Dominio público, sin barra final. Si cambia, actualizar también index.html, public/robots.txt y public/sitemap.xml. */
+export const SITE_URL = 'https://alanalvarenga.dev'
+
 /** Textos de la estructura del sitio: navegación, footer, tema, metadatos y páginas de sistema. */
 export const site: SiteContent = {
   meta: {

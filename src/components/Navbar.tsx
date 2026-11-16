@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { site } from '@/data/site'
 import { useActiveSection } from '@/hooks/useActiveSection'
 import { Logo } from './Logo'
@@ -84,7 +84,7 @@ export function Navbar() {
 
       <AnimatePresence initial={false}>
         {open && (
-          <motion.div
+          <m.div
             id={menuId}
             key="menu"
             initial={reduce ? false : { height: 0, opacity: 0 }}
@@ -112,7 +112,7 @@ export function Navbar() {
             <div className="container-x pb-4 pt-2">
               <ThemeToggle />
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>

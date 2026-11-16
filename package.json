@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b",
-    "images": "node scripts/optimize-images.mjs"
+    "images": "node scripts/optimize-images.mjs",
+    "og": "node scripts/generate-og.mts"
   },
   "dependencies": {
     "framer-motion": "^14.14.0",

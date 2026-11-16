@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 
 interface RevealProps {
   children: ReactNode
@@ -20,7 +20,7 @@ export function Reveal({ children, className, delay = 0, y = 16, as = 'div' }: R
     const Tag = as
     return <Tag className={className}>{children}</Tag>
   }
-  const M = motion[as]
+  const M = m[as]
   return (
     <M
       className={className}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useReducedMotion, type Variants } from 'framer-motion'
+import { m, useReducedMotion, type Variants } from 'framer-motion'
 import { Nanduti } from '@/components/Nanduti'
 import { profile } from '@/data/profile'
 import { hero } from '@/data/sections'
@@ -111,34 +111,34 @@ export function Hero() {
       <Nanduti {...nd} spokes={40} rings={7} duration={2600} weaveOnMount={!skipIntro} />
 
       <div className="container-x relative grid items-center gap-[clamp(28px,4vw,56px)] pb-[clamp(40px,6vw,80px)] pt-[clamp(32px,5vw,72px)] nav:grid-cols-[1.1fr_.9fr]">
-        <motion.div variants={textGroup} initial={reduce ? false : 'hidden'} animate="show">
-          <motion.p variants={textItem} className="eyebrow m-0">
+        <m.div variants={textGroup} initial={reduce ? false : 'hidden'} animate="show">
+          <m.p variants={textItem} className="eyebrow m-0">
             {profile.location}
-          </motion.p>
-          <motion.h1
+          </m.p>
+          <m.h1
             id="hero-title"
             variants={textItem}
             className="my-3.5 text-[clamp(2.3rem,5.6vw,4.2rem)] font-extrabold leading-[1.02] tracking-[-0.035em]"
           >
             {profile.name}
-          </motion.h1>
-          <motion.p variants={textItem} className="m-0 mb-1.5 font-semibold text-muted">
+          </m.h1>
+          <m.p variants={textItem} className="m-0 mb-1.5 font-semibold text-muted">
             {profile.role}
-          </motion.p>
-          <motion.p variants={textItem} className="m-0 mb-[26px] max-w-[46ch] text-[1.02rem]">
+          </m.p>
+          <m.p variants={textItem} className="m-0 mb-[26px] max-w-[46ch] text-[1.02rem]">
             {profile.lede}
-          </motion.p>
-          <motion.div variants={textItem} className="flex flex-wrap gap-2.5">
+          </m.p>
+          <m.div variants={textItem} className="flex flex-wrap gap-2.5">
             <Link to={{ pathname: '/', hash: '#proyectos' }} className="btn btn-pri">
               {hero.ctaProjects}
             </Link>
             <Link to={{ pathname: '/', hash: '#contacto' }} className="btn btn-sec">
               {hero.ctaContact}
             </Link>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
 
-        <motion.aside
+        <m.aside
           aria-label={hero.panelLabel}
           className="panel"
           initial={reduce ? false : { opacity: 0, x: mobile ? 0 : 24, y: mobile ? 16 : 0 }}
@@ -158,7 +158,7 @@ export function Hero() {
             ))}
           </dl>
           <Terminal start={terminalOn} instant={reduce} />
-        </motion.aside>
+        </m.aside>
       </div>
     </section>
   )

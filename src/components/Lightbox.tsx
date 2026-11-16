@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import type { ProjectImage } from '@/data/types'
 
 interface LightboxLabels {
@@ -80,7 +80,7 @@ export function Lightbox({ images, index, onChange, onClose, labels }: LightboxP
   return createPortal(
     <AnimatePresence>
       {open && image && index !== null && (
-        <motion.div
+        <m.div
           ref={dialogRef}
           role="dialog"
           aria-modal="true"
@@ -115,7 +115,7 @@ export function Lightbox({ images, index, onChange, onClose, labels }: LightboxP
               if (e.target === e.currentTarget) onClose()
             }}
           >
-            <motion.img
+            <m.img
               key={image.src}
               src={image.src}
               width={image.width}
@@ -136,7 +136,7 @@ export function Lightbox({ images, index, onChange, onClose, labels }: LightboxP
               <span aria-hidden="true">→</span>
             </button>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>,
     document.body,
