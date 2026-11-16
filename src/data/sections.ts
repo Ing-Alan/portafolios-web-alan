@@ -14,12 +14,16 @@ export const projectsSection = {
   intro:
     'Sistemas de gestión construidos a medida para organizaciones reales. Entrá a cada uno para ver el problema, la solución y las decisiones técnicas detrás.',
   cardCta: 'Ver caso de estudio →',
+  keyStackLabel: 'Tecnologías principales',
 }
 
 export const projectPage = {
   back: '← Volver a proyectos',
-  clientLabel: 'Cliente',
-  statusLabel: 'Estado',
+  clientLabel: 'cliente',
+  statusLabel: 'estado',
+  stackPanel: 'stack',
+  rolePanel: 'mi_rol',
+  siblingsLabel: 'Otros proyectos',
   problem: 'Problema',
   solution: 'Solución',
   features: 'Funciones principales',

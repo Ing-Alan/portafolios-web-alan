@@ -1,5 +1,6 @@
 // Convierte las capturas de Referencia/portafolio-imagenes/ a WebP
-// (ancho máximo 1600px) y las guarda en src/assets/projects/<slug>/.
+// (ancho máximo 1600px + variante -sm de 800px para srcset)
+// y las guarda en src/assets/projects/<slug>/.
 // Uso: npm run images
 import { mkdir, readdir, stat } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
@@ -12,6 +13,8 @@ const SRC_DIR = path.join(root, 'Referencia', 'portafolio-imagenes')
 const OUT_DIR = path.join(root, 'src', 'assets', 'projects')
 const MAX_WIDTH = 1600
 const QUALITY = 82
+const SMALL_WIDTH = 800
+const SMALL_SUFFIX = '-sm'
 
 /** carpeta de origen → slug del proyecto */
 const SLUGS = {
@@ -48,11 +51,19 @@ for (const [srcFolder, slug] of Object.entries(SLUGS)) {
       .resize({ width: MAX_WIDTH, withoutEnlargement: true })
       .webp({ quality: QUALITY, effort: 6, smartSubsample: true })
       .toFile(output)
+    // Variante chica para srcset (tarjetas y pantallas angostas)
+    const small = path.join(outDir, `${path.parse(file).name}${SMALL_SUFFIX}.webp`)
+    const infoSm = await sharp(input)
+      .resize({ width: SMALL_WIDTH, withoutEnlargement: true })
+      .webp({ quality: QUALITY, effort: 6, smartSubsample: true })
+      .toFile(small)
     const inSize = (await stat(input)).size
     totalIn += inSize
-    totalOut += info.size
+    totalOut += info.size + infoSm.size
     count++
-    console.log(`${kb(inSize)} → ${kb(info.size)}  ${info.width}×${info.height}  ${slug}/${path.basename(output)}`)
+    console.log(
+      `${kb(inSize)} → ${kb(info.size)} + ${kb(infoSm.size)}  ${info.width}×${info.height}  ${slug}/${path.basename(output)}`,
+    )
   }
 }
 

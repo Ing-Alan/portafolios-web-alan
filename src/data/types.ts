@@ -52,15 +52,21 @@ export type ProjectStatus = 'En producción' | 'En implementación'
 
 export interface Annotation {
   text: string
-  /** Posición horizontal en % sobre la imagen (0–100) */
+  /** Punto señalado: posición horizontal en % sobre la imagen (0–100) */
   x: number
-  /** Posición vertical en % sobre la imagen (0–100) */
+  /** Punto señalado: posición vertical en % sobre la imagen (0–100) */
   y: number
+  /** Centro de la etiqueta en % (escritorio). Si falta, se calcula a partir del punto. */
+  lx?: number
+  ly?: number
 }
 
 export interface ProjectImage {
-  /** URL procesada por Vite (import del .webp) */
+  /** URL procesada por Vite (.webp, ancho completo) */
   src: string
+  /** Variante chica (.webp de 800px) para srcset */
+  srcSmall: string
+  smallWidth: number
   /** Nombre del archivo, sin extensión */
   file: string
   width: number
@@ -82,6 +88,8 @@ export interface Project {
   features: string[]
   techDecisions: string[]
   stack: string[]
+  /** 3 o 4 tecnologías principales para la tarjeta */
+  keyStack: string[]
   role: string
   confidentiality: string
   images: ProjectImage[]
