@@ -5,17 +5,20 @@ import { Footer } from './Footer'
 
 /** Al cambiar de ruta: si hay #ancla, desplaza hasta ella; si no, vuelve arriba. */
 function ScrollManager() {
-  const { pathname, hash } = useLocation()
+  const { pathname, hash, key } = useLocation()
   useEffect(() => {
     if (hash) {
       const el = document.getElementById(decodeURIComponent(hash.slice(1)))
       if (el) {
-        el.scrollIntoView()
+        // scroll-behavior (CSS) decide si es suave; con movimiento reducido es instantáneo.
+        // scroll-padding-top compensa la barra fija.
+        el.scrollIntoView({ block: 'start' })
         return
       }
     }
-    window.scrollTo(0, 0)
-  }, [pathname, hash])
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    // `key` cambia en cada navegación: repetir un clic al mismo #ancla vuelve a desplazar.
+  }, [pathname, hash, key])
   return null
 }
 
