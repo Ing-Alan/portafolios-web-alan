@@ -1,0 +1,403 @@
+<title>Portafolio Alan Alvarenga</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: página de comparación con tres "pantallas de inicio" apiladas, cada una dentro de un marco de navegador.
+   Estructura de panel de monitoreo + ficha de plano técnico + ñandutí generado en canvas. */
+:root{
+  --bg:#E9EFF6; --surface:#FFFFFF; --surface-2:#F4F7FB;
+  --ink:#0B1B33; --muted:#566A84; --rule:#D3DDEA;
+  --line:#2C7FC9; --accent:#1663B8; --accent-ink:#FFFFFF;
+  --grid:rgba(44,127,201,.10); --nanduti:#2C7FC9;
+  --hero:#F7FAFD;
+  --ok:#11845A; --ok-bg:#DFF3EA; --warn:#A86A12; --warn-bg:#FBEFD9; --err:#B83A33;
+  --f-display:"Sora","Segoe UI",system-ui,sans-serif;
+  --f-body:"Manrope","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#050D1A; --surface:#0C1A30; --surface-2:#0A1628;
+  --ink:#E4EDF8; --muted:#8DA1BD; --rule:#1C3150;
+  --line:#5DB9F2; --accent:#5DB9F2; --accent-ink:#04101F;
+  --grid:rgba(93,185,242,.08); --nanduti:#5DB9F2;
+  --hero:#071325;
+  --ok:#3DD598; --ok-bg:rgba(61,213,152,.12); --warn:#F4B547; --warn-bg:rgba(244,181,71,.12); --err:#F2776F;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#050D1A; --surface:#0C1A30; --surface-2:#0A1628;
+  --ink:#E4EDF8; --muted:#8DA1BD; --rule:#1C3150;
+  --line:#5DB9F2; --accent:#5DB9F2; --accent-ink:#04101F;
+  --grid:rgba(93,185,242,.08); --nanduti:#5DB9F2;
+  --hero:#071325;
+  --ok:#3DD598; --ok-bg:rgba(61,213,152,.12); --warn:#F4B547; --warn-bg:rgba(244,181,71,.12); --err:#F2776F;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 72px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+
+/* cabecera de la página de comparación */
+.intro{display:flex;flex-wrap:wrap;gap:20px 32px;align-items:flex-end;justify-content:space-between}
+.intro h1{font-family:var(--f-display);font-size:clamp(1.6rem,3.2vw,2.2rem);margin:0 0 6px;letter-spacing:-.02em;text-wrap:balance}
+.intro p{margin:0;color:var(--muted);max-width:62ch}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:999px;padding:3px;background:var(--surface)}
+.seg button{font:600 13px var(--f-body);color:var(--muted);background:none;border:0;padding:7px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* opción */
+.opt-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:14px}
+.opt-head .tag{font:700 12px var(--f-mono);color:var(--accent);letter-spacing:.06em}
+.opt-head h2{font-family:var(--f-display);font-size:1.35rem;margin:0;letter-spacing:-.01em}
+.opt-head p{flex-basis:100%;margin:0;color:var(--muted);max-width:80ch}
+.replay{margin-left:auto;font:600 12.5px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--rule);
+  border-radius:8px;padding:6px 12px;cursor:pointer}
+
+.frame{border:1px solid var(--rule);border-radius:14px;overflow:hidden;background:var(--hero);
+  box-shadow:0 30px 60px -40px rgba(5,20,45,.45)}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--rule)}
+.bar i{width:10px;height:10px;border-radius:50%;background:var(--rule);display:block}
+.bar .url{margin-left:6px;font:12px var(--f-mono);color:var(--muted);background:var(--surface-2);border:1px solid var(--rule);
+  border-radius:999px;padding:3px 12px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.hero{position:relative;overflow:hidden;background:var(--hero)}
+.hero canvas.nd{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.nav{position:relative;display:flex;align-items:center;gap:18px;padding:18px clamp(18px,4vw,40px);font-size:13.5px;font-weight:600}
+.nav .logo{font:700 15px var(--f-mono);letter-spacing:.02em}
+.nav .logo span{color:var(--accent)}
+.nav .links{display:flex;gap:18px;margin-left:auto;color:var(--muted)}
+.nav .links a{color:inherit;text-decoration:none}
+
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 14px var(--f-body);padding:12px 18px;border-radius:10px;text-decoration:none;cursor:pointer;border:1px solid transparent}
+.btn.pri{background:var(--accent);color:var(--accent-ink)}
+.btn.sec{background:transparent;color:var(--ink);border-color:var(--rule)}
+.ctas{display:flex;flex-wrap:wrap;gap:10px}
+
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;position:relative;flex:none}
+.dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--ok);opacity:0;animation:ping 2s ease-out infinite}
+.dot.warn{background:var(--warn)} .dot.warn::after{border-color:var(--warn)}
+@keyframes ping{0%{transform:scale(.6);opacity:.7}100%{transform:scale(1.8);opacity:0}}
+.mono{font-family:var(--f-mono)}
+.eyebrow{font:600 12px var(--f-mono);color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+
+/* ====== Opción 1: Consola ====== */
+.o1 .body{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,56px);align-items:center;
+  padding:clamp(28px,5vw,64px) clamp(18px,4vw,40px) clamp(36px,6vw,72px)}
+.o1 h3{font-family:var(--f-display);font-weight:800;font-size:clamp(2.3rem,5.6vw,4.2rem);line-height:1.02;letter-spacing:-.035em;margin:14px 0 14px;text-wrap:balance}
+.o1 .role{font-weight:600;color:var(--muted);margin:0 0 6px}
+.o1 .lede{max-width:46ch;margin:0 0 26px;font-size:1.02rem}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:14px;min-width:0;box-shadow:0 20px 40px -30px rgba(5,20,45,.5)}
+.panel .ph{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--rule);font:500 12px var(--f-mono);color:var(--muted)}
+.panel .ph b{color:var(--ink);font-weight:700}
+.panel .ph .live{margin-left:auto;display:inline-flex;align-items:center;gap:7px;color:var(--ok);font-weight:700}
+.rows{padding:6px 16px}
+.row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed var(--rule);font-size:13.5px}
+.row:last-child{border-bottom:0}
+.row .k{color:var(--muted);font:500 12px var(--f-mono)}
+.row .v{margin-left:auto;font-weight:700;text-align:right;display:flex;align-items:center;gap:8px}
+.row .big{font:700 22px var(--f-display);font-variant-numeric:tabular-nums}
+.pill{font:700 11.5px var(--f-body);padding:3px 9px;border-radius:999px;background:var(--ok-bg);color:var(--ok);white-space:nowrap}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.term{margin:4px 16px 16px;padding:12px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--rule);
+  font:500 12.5px var(--f-mono);min-height:66px;overflow-wrap:anywhere}
+.term .p{color:var(--accent)} .term .okt{color:var(--ok)}
+.caret{display:inline-block;width:7px;height:14px;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ====== Opción 2: Plano ====== */
+.o2 .hero{background-color:var(--hero);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+  linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px}
+.o2 .body{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;
+  padding:clamp(20px,4vw,48px) clamp(18px,4vw,40px) clamp(32px,5vw,60px);min-height:470px}
+.o2 h3{font-family:var(--f-display);font-weight:700;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.04;letter-spacing:-.03em;margin:12px 0 16px;text-wrap:balance}
+.o2 .sheet{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font:500 12.5px var(--f-mono);margin:0 0 26px;max-width:440px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0}
+.o2 .sheet dt{color:var(--muted)} .o2 .sheet dd{margin:0;color:var(--ink);font-weight:700;display:flex;align-items:center;gap:8px}
+.o2 .art{position:relative;height:100%;min-height:380px}
+.o2 .art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.o2 .art path{fill:none;stroke:var(--line);stroke-width:1.3;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1}
+.o2 .art circle{fill:var(--line)}
+.o2.go .art path{animation:draw 1.1s ease forwards}
+.o2.go .art path:nth-of-type(2){animation-delay:.25s}.o2.go .art path:nth-of-type(3){animation-delay:.5s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.note{position:absolute;font:600 11.5px var(--f-mono);background:var(--surface);color:var(--ink);border:1px solid var(--line);
+  padding:6px 10px;border-radius:6px;white-space:nowrap;box-shadow:0 8px 20px -14px rgba(5,20,45,.6)}
+.note small{display:block;color:var(--muted);font-weight:500;font-size:10.5px}
+.o2 .stamp{position:absolute;right:16px;bottom:14px;font:600 10.5px var(--f-mono);color:var(--muted);text-align:right;line-height:1.4}
+
+/* ====== Opción 3: Barra de estado ====== */
+.o3 .status{position:relative;display:flex;flex-wrap:wrap;gap:8px 22px;padding:10px clamp(18px,4vw,40px);
+  border-bottom:1px solid var(--rule);background:var(--surface);font:500 12px var(--f-mono);color:var(--muted)}
+.o3 .status span{display:inline-flex;align-items:center;gap:8px}
+.o3 .status b{color:var(--ink)}
+.o3 .body{position:relative;padding:clamp(28px,5vw,60px) clamp(18px,4vw,40px) clamp(28px,4vw,44px)}
+.o3 h3{font-family:var(--f-display);font-weight:800;font-size:clamp(2.8rem,9vw,6.6rem);line-height:.92;letter-spacing:-.045em;margin:10px 0 18px;max-width:9ch}
+.o3 h3 em{font-style:normal;color:var(--accent)}
+.o3 .lede{max-width:50ch;margin:0 0 22px;font-size:1.02rem}
+.svc{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:38px}
+.svc article{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;min-width:0}
+.svc .top{display:flex;align-items:center;gap:8px;font:600 11px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.svc h4{font-family:var(--f-display);font-size:1rem;margin:8px 0 4px;letter-spacing:-.01em}
+.svc p{margin:0;color:var(--muted);font-size:13px}
+.svc .meter{height:4px;border-radius:4px;background:var(--surface-2);margin-top:12px;overflow:hidden;border:1px solid var(--rule)}
+.svc .meter i{display:block;height:100%;width:var(--w);background:var(--ok);transform-origin:left;transition:transform 1.2s ease}
+.svc .meter i.warn{background:var(--warn)}
+.o3:not(.go) .svc .meter i{transform:scaleX(1)}
+.o3.prep .svc .meter i{transform:scaleX(0);transition:none}
+
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:13px;color:var(--muted);margin-top:12px}
+.legend b{color:var(--ink)}
+
+@media (max-width:820px){
+  .o1 .body,.o2 .body{grid-template-columns:1fr}
+  .o2 .art{min-height:300px}
+  .svc{grid-template-columns:1fr}
+  .nav .links{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .dot::after,.caret{animation:none}
+  .o2.go .art path{animation:none;stroke-dashoffset:0}
+  .o2 .art path{stroke-dashoffset:0}
+  .svc .meter i{transition:none}
+}
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <div>
+      <h1>Vista previa del inicio: tres opciones</h1>
+      <p>Las tres combinan el panel de control, el plano técnico y el ñandutí. Cambiá entre modo claro y oscuro para ver cómo se comporta cada una, y usá "Repetir animación" para ver la entrada.</p>
+    </div>
+    <div class="seg" role="group" aria-label="Tema">
+      <button type="button" id="t-auto" data-t="" aria-pressed="true">Sistema</button>
+      <button type="button" id="t-light" data-t="light" aria-pressed="false">Claro</button>
+      <button type="button" id="t-dark" data-t="dark" aria-pressed="false">Oscuro</button>
+    </div>
+  </header>
+
+  <!-- ================= OPCIÓN 1 ================= -->
+  <section class="o1" id="opt1">
+    <div class="opt-head">
+      <span class="tag">OPCIÓN 1</span><h2>Consola</h2>
+      <button class="replay" type="button" id="r1">Repetir animación</button>
+      <p>Texto a la izquierda y un panel de estado a la derecha, como una consola de monitoreo. El ñandutí se teje detrás de tu nombre. Es la más equilibrada entre las tres ideas.</p>
+    </div>
+    <div class="frame">
+      <div class="bar"><i></i><i></i><i></i><span class="url">alanalvarenga.dev</span></div>
+      <div class="hero">
+        <canvas class="nd" data-cx=".1" data-cy=".55" data-r=".6" data-alpha=".2" data-spokes="40" data-rings="7"></canvas>
+        <nav class="nav"><span class="logo">alan<span>.</span>dev</span>
+          <span class="links"><a href="#opt1">Proyectos</a><a href="#opt1">Sobre mí</a><a href="#opt1">Stack</a><a href="#opt1">Contacto</a></span></nav>
+        <div class="body">
+          <div>
+            <span class="eyebrow">Areguá, Paraguay</span>
+            <h3>Alan Alvarenga</h3>
+            <p class="role">Desarrollador Full Stack · Supervisor de Sistemas en Producción</p>
+            <p class="lede">Construyo sistemas de gestión web seguros, de la base de datos al despliegue, y sé lo que pasa con ellos cuando ya están en producción.</p>
+            <div class="ctas"><a class="btn pri" href="#opt1">Ver proyectos →</a><a class="btn sec" href="#opt1">Contactar</a></div>
+          </div>
+          <div class="panel">
+            <div class="ph"><b>estado</b> · panel en vivo <span class="live"><span class="dot"></span>online</span></div>
+            <div class="rows">
+              <div class="row"><span class="k">disponibilidad</span><span class="v"><span class="pill">Disponible para proyectos</span></span></div>
+              <div class="row"><span class="k">sistemas_en_produccion</span><span class="v"><span class="big" data-count="2">2</span></span></div>
+              <div class="row"><span class="k">en_implementacion</span><span class="v"><span class="big" data-count="1">1</span></span></div>
+              <div class="row"><span class="k">stack</span><span class="v mono" style="font-size:12.5px">React · TS · PostgreSQL</span></div>
+            </div>
+            <div class="term"><span class="p">$</span> <span data-type="npm run deploy">npm run deploy</span><br><span class="okt" data-type-after="✓ Desplegado en Netlify · RLS activo · Ley 7593/2025">✓ Desplegado en Netlify · RLS activo · Ley 7593/2025</span> <span class="caret"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OPCIÓN 2 ================= -->
+  <section class="o2" id="opt2">
+    <div class="opt-head">
+      <span class="tag">OPCIÓN 2</span><h2>Plano</h2>
+      <button class="replay" type="button" id="r2">Repetir animación</button>
+      <p>Fondo de grilla como un plano de ingeniería. El ñandutí ocupa la derecha como si fuera el "diseño" del plano, con anotaciones técnicas que se trazan hacia él. Tus datos aparecen como una ficha técnica.</p>
+    </div>
+    <div class="frame">
+      <div class="bar"><i></i><i></i><i></i><span class="url">alanalvarenga.dev</span></div>
+      <div class="hero">
+        <nav class="nav"><span class="logo">alan<span>.</span>dev</span>
+          <span class="links"><a href="#opt2">Proyectos</a><a href="#opt2">Sobre mí</a><a href="#opt2">Stack</a><a href="#opt2">Contacto</a></span></nav>
+        <div class="body">
+          <div>
+            <span class="eyebrow">Ficha técnica · Rev. 2026</span>
+            <h3>Alan Alvarenga</h3>
+            <dl class="sheet">
+              <dt>rol</dt><dd>Desarrollador Full Stack</dd>
+              <dt>operación</dt><dd>Supervisor de Sistemas en Producción</dd>
+              <dt>estado</dt><dd><span class="dot"></span>Disponible para proyectos</dd>
+              <dt>base</dt><dd>Areguá, Paraguay</dd>
+            </dl>
+            <div class="ctas"><a class="btn pri" href="#opt2">Ver proyectos →</a><a class="btn sec" href="#opt2">Contactar</a></div>
+          </div>
+          <div class="art">
+            <canvas class="nd" data-cx=".55" data-cy=".5" data-r=".44" data-alpha=".75" data-spokes="32" data-rings="6"></canvas>
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <path pathLength="1" d="M8 12 L22 12 L40 34"/>
+              <path pathLength="1" d="M92 22 L80 22 L66 38"/>
+              <path pathLength="1" d="M10 88 L26 88 L46 66"/>
+            </svg>
+            <div class="note" style="left:0;top:6%">React + TypeScript<small>interfaz</small></div>
+            <div class="note" style="right:0;top:16%">PostgreSQL + RLS<small>datos y seguridad</small></div>
+            <div class="note" style="left:0;bottom:6%">Ley 7593/2025<small>protección de datos</small></div>
+          </div>
+        </div>
+        <div class="stamp">ESC 1:1 · HOJA 01/08<br>INICIO</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OPCIÓN 3 ================= -->
+  <section class="o3" id="opt3">
+    <div class="opt-head">
+      <span class="tag">OPCIÓN 3</span><h2>Barra de estado</h2>
+      <button class="replay" type="button" id="r3">Repetir animación</button>
+      <p>Tu nombre en grande, una barra de estado arriba como en Grafana y el ñandutí saliendo por el borde derecho. Abajo, los proyectos ya aparecen como "servicios" con su estado. Es la más impactante.</p>
+    </div>
+    <div class="frame">
+      <div class="bar"><i></i><i></i><i></i><span class="url">alanalvarenga.dev</span></div>
+      <div class="hero">
+        <canvas class="nd" data-cx="1.0" data-cy=".42" data-r=".5" data-alpha=".38" data-spokes="48" data-rings="8" data-rmode="w"></canvas>
+        <div class="status">
+          <span><span class="dot"></span><b>Disponible</b> para proyectos</span>
+          <span>producción <b data-count="2">2</b></span>
+          <span>implementación <b data-count="1">1</b></span>
+          <span>Areguá · PY · UTC−3</span>
+        </div>
+        <nav class="nav"><span class="logo">alan<span>.</span>dev</span>
+          <span class="links"><a href="#opt3">Proyectos</a><a href="#opt3">Sobre mí</a><a href="#opt3">Stack</a><a href="#opt3">Contacto</a></span></nav>
+        <div class="body">
+          <span class="eyebrow">Full Stack · Sistemas en producción</span>
+          <h3>Alan <em>Alvarenga</em></h3>
+          <p class="lede">Sistemas de gestión web a medida, seguros y listos para producción. De la base de datos al despliegue.</p>
+          <div class="ctas"><a class="btn pri" href="#opt3">Ver proyectos →</a><a class="btn sec" href="#opt3">Contactar</a></div>
+          <div class="svc">
+            <article><div class="top"><span class="dot"></span>En producción</div><h4>Sistema odontológico</h4><p>Agenda, odontograma y cobros</p><div class="meter"><i style="--w:100%"></i></div></article>
+            <article><div class="top"><span class="dot"></span>En producción · Donado</div><h4>Sistema parroquial</h4><p>Feligreses, catequesis y asistencia</p><div class="meter"><i style="--w:100%"></i></div></article>
+            <article><div class="top"><span class="dot warn"></span>En implementación</div><h4>Vacaciones y permisos</h4><p>Aprobación en dos pasos y saldos</p><div class="meter"><i class="warn" style="--w:80%"></i></div></article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="legend"><span><b>Común a las tres:</b> mismos colores, tipografías y modo claro/oscuro.</span><span>Lo que cambia es dónde vive cada idea.</span></div>
+</div>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.documentElement;
+
+  /* ---------- Tema ---------- */
+  const btns=[...document.querySelectorAll('.seg button')];
+  function setTheme(t){
+    if(t) root.setAttribute('data-theme',t); else root.removeAttribute('data-theme');
+    btns.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.t===t)));
+    try{ localStorage.setItem('pv-theme',t) }catch(e){}
+    redrawAll();
+  }
+  btns.forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.t)));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>redrawAll());
+
+  /* ---------- Ñandutí ---------- */
+  const P=(cx,cy,r,a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)];
+  function build(cx,cy,R,spokes,rings){
+    const L=[], step=Math.PI*2/spokes, r0=R*.08;
+    const rs=[]; for(let i=0;i<=rings;i++) rs.push(r0+(R-r0)*Math.pow(i/rings,.92));
+    // rosa central
+    for(let k=0;k<8;k++){ const a=k*Math.PI/4, pts=[];
+      for(let t=0;t<=16;t++){ const u=t/16*Math.PI; const rr=r0*1.6*Math.sin(u); pts.push(P(cx,cy,rr,a+(u-Math.PI/2)*.28)); }
+      L.push(pts); }
+    // rayos (urdimbre)
+    for(let k=0;k<spokes;k++){ const a=k*step; L.push([P(cx,cy,r0,a),P(cx,cy,R*1.04,a)]); }
+    // anillos y pétalos, del centro hacia afuera
+    for(let i=0;i<rings;i++){
+      const a1=rs[i], a2=rs[i+1], ring=[];
+      for(let t=0;t<=spokes*4;t++) ring.push(P(cx,cy,a1,t*step/4));
+      L.push(ring);
+      for(let k=0;k<spokes;k++){
+        const th=k*step, pts=[], inv=i%2===1;
+        for(let t=0;t<=10;t++){ const u=t/10;
+          const r = inv ? a2-(a2-a1)*Math.sin(u*Math.PI)*.92 : a1+(a2-a1)*Math.sin(u*Math.PI)*.92;
+          pts.push(P(cx,cy,r,th+u*step)); }
+        L.push(pts);
+      }
+    }
+    // borde festoneado
+    for(let k=0;k<spokes;k++){ const th=k*step, pts=[];
+      for(let t=0;t<=10;t++){ const u=t/10; pts.push(P(cx,cy,R+R*.06*Math.sin(u*Math.PI),th+u*step)); }
+      L.push(pts); }
+    const lens=L.map(pl=>{let s=0;for(let j=1;j<pl.length;j++)s+=Math.hypot(pl[j][0]-pl[j-1][0],pl[j][1]-pl[j-1][1]);return s});
+    return {L,lens,total:lens.reduce((a,b)=>a+b,0)};
+  }
+  const canv=[...document.querySelectorAll('canvas.nd')].map(c=>({c,p:1,geo:null}));
+  function size(o){
+    const c=o.c, box=c.getBoundingClientRect(), dpr=Math.min(devicePixelRatio||1,2);
+    c.width=Math.max(1,Math.round(box.width*dpr)); c.height=Math.max(1,Math.round(box.height*dpr));
+    const w=c.width,h=c.height,d=c.dataset;
+    const R=(d.rmode==='w'? Math.max(w*.42,h*.5) : Math.min(w,h)*1.0)*parseFloat(d.r);
+    o.geo=build(w*parseFloat(d.cx),h*parseFloat(d.cy),R,+d.spokes,+d.rings); o.dpr=dpr;
+  }
+  function draw(o){
+    const c=o.c, ctx=c.getContext('2d'), g=o.geo; if(!g) return;
+    ctx.clearRect(0,0,c.width,c.height);
+    const col=getComputedStyle(c).getPropertyValue('--nanduti').trim()||'#5DB9F2';
+    ctx.strokeStyle=col; ctx.globalAlpha=parseFloat(c.dataset.alpha); ctx.lineWidth=1*o.dpr; ctx.lineJoin='round'; ctx.lineCap='round';
+    let left=g.total*o.p;
+    for(let i=0;i<g.L.length&&left>0;i++){
+      const pl=g.L[i]; ctx.beginPath(); ctx.moveTo(pl[0][0],pl[0][1]);
+      if(g.lens[i]<=left){ for(let j=1;j<pl.length;j++) ctx.lineTo(pl[j][0],pl[j][1]); left-=g.lens[i]; }
+      else { for(let j=1;j<pl.length&&left>0;j++){ const sl=Math.hypot(pl[j][0]-pl[j-1][0],pl[j][1]-pl[j-1][1]);
+          if(sl<=left){ ctx.lineTo(pl[j][0],pl[j][1]); left-=sl; } else { const f=left/sl;
+            ctx.lineTo(pl[j-1][0]+(pl[j][0]-pl[j-1][0])*f, pl[j-1][1]+(pl[j][1]-pl[j-1][1])*f); left=0; } } }
+      ctx.stroke();
+    }
+  }
+  function redrawAll(){ canv.forEach(o=>{ if(!o.geo) size(o); draw(o); }); }
+  function weave(o,ms){
+    if(reduce){ o.p=1; draw(o); return; }
+    const t0=performance.now(); o.run=(o.run||0)+1; const id=o.run;
+    (function f(now){ if(id!==o.run) return; const t=Math.min(1,(now-t0)/ms); o.p=1-Math.pow(1-t,3); draw(o); if(t<1) requestAnimationFrame(f); })(t0);
+  }
+  const ro=new ResizeObserver(es=>es.forEach(e=>{ const o=canv.find(x=>x.c===e.target); if(o){ size(o); draw(o);} }));
+  canv.forEach(o=>{ size(o); draw(o); ro.observe(o.c); });
+
+  /* ---------- Contadores y texto tipo terminal ---------- */
+  function count(scope){
+    scope.querySelectorAll('[data-count]').forEach(el=>{ const n=+el.dataset.count; if(reduce){el.textContent=n;return;}
+      const t0=performance.now(); (function f(now){ const t=Math.min(1,(now-t0)/1200); el.textContent=Math.round(n*t); if(t<1) requestAnimationFrame(f); })(t0); });
+  }
+  function type(scope){
+    const a=scope.querySelector('[data-type]'), b=scope.querySelector('[data-type-after]'); if(!a) return;
+    if(reduce){ a.textContent=a.dataset.type; b.textContent=b.dataset.typeAfter; return; }
+    a.textContent=''; b.textContent=''; let i=0; const s1=a.dataset.type, s2=b.dataset.typeAfter;
+    const iv=setInterval(()=>{ i++; if(i<=s1.length){ a.textContent=s1.slice(0,i); }
+      else if(i>s1.length+8){ const j=i-s1.length-8; b.textContent=s2.slice(0,j); if(j>=s2.length) clearInterval(iv); } },45);
+  }
+
+  /* ---------- Secuencias por opción ---------- */
+  function play1(){ const s=document.getElementById('opt1'); weave(canv[0],2600); count(s); type(s); }
+  function play2(){ const s=document.getElementById('opt2'); s.classList.remove('go'); void s.offsetWidth; weave(canv[1],2200); setTimeout(()=>s.classList.add('go'), reduce?0:900); }
+  function play3(){ const s=document.getElementById('opt3'); weave(canv[2],3000); count(s);
+    if(!reduce){ s.classList.add('prep'); void s.offsetWidth; s.classList.remove('prep'); s.classList.add('go'); } }
+  document.getElementById('r1').addEventListener('click',play1);
+  document.getElementById('r2').addEventListener('click',play2);
+  document.getElementById('r3').addEventListener('click',play3);
+
+  let saved=''; try{ saved=localStorage.getItem('pv-theme')||'' }catch(e){}
+  if(saved) setTheme(saved);
+  play1(); play2(); play3();
+})();
+</script>
