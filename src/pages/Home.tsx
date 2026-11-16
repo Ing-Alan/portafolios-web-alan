@@ -1,24 +1,21 @@
-import { site } from '@/data/site'
 import { Hero } from '@/sections/Hero'
 import { Projects } from '@/sections/Projects'
+import { About } from '@/sections/About'
+import { Stack } from '@/sections/Stack'
+import { Experience } from '@/sections/Experience'
+import { Certifications } from '@/sections/Certifications'
 
 export function Home() {
   return (
     <>
       <Hero />
       <Projects />
-      {/* Marcadores provisorios: se reemplazan por las secciones reales en las próximas etapas */}
-      <div className="container-x">
-        {site.nav.links
-          .filter((l) => l.id !== 'proyectos')
-          .map((l) => (
-            <section key={l.id} id={l.id} aria-labelledby={`${l.id}-title`} className="border-b border-dashed border-rule py-24">
-              <h2 id={`${l.id}-title`} className="text-2xl font-bold">
-                {l.label}
-              </h2>
-            </section>
-          ))}
-      </div>
+      <About />
+      <Stack />
+      <Experience />
+      <Certifications />
+      {/* Provisorio: la sección de contacto real llega en la próxima etapa */}
+      <section id="contacto" aria-label="Contacto" className="container-x py-24" />
     </>
   )
 }
