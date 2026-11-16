@@ -1,0 +1,76 @@
+/*
+  Tokens de diseño — copiados exactamente de Referencia/vista-previa-inicio.html ("Opción 1 Consola").
+  Tema:
+    - sin data-theme       → sigue al sistema operativo (prefers-color-scheme)
+    - data-theme="light"   → fuerza claro
+    - data-theme="dark"    → fuerza oscuro
+*/
+:root {
+  --bg: #e9eff6;
+  --surface: #ffffff;
+  --surface-2: #f4f7fb;
+  --ink: #0b1b33;
+  --muted: #566a84;
+  --rule: #d3ddea;
+  --line: #2c7fc9;
+  --accent: #1663b8;
+  --accent-ink: #ffffff;
+  --grid: rgba(44, 127, 201, 0.1);
+  --nanduti: #2c7fc9;
+  --hero: #f7fafd;
+  --ok: #11845a;
+  --ok-bg: #dff3ea;
+  --warn: #a86a12;
+  --warn-bg: #fbefd9;
+  --err: #b83a33;
+
+  --f-display: 'Sora', 'Segoe UI', system-ui, sans-serif;
+  --f-body: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #050d1a;
+    --surface: #0c1a30;
+    --surface-2: #0a1628;
+    --ink: #e4edf8;
+    --muted: #8da1bd;
+    --rule: #1c3150;
+    --line: #5db9f2;
+    --accent: #5db9f2;
+    --accent-ink: #04101f;
+    --grid: rgba(93, 185, 242, 0.08);
+    --nanduti: #5db9f2;
+    --hero: #071325;
+    --ok: #3dd598;
+    --ok-bg: rgba(61, 213, 152, 0.12);
+    --warn: #f4b547;
+    --warn-bg: rgba(244, 181, 71, 0.12);
+    --err: #f2776f;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #050d1a;
+  --surface: #0c1a30;
+  --surface-2: #0a1628;
+  --ink: #e4edf8;
+  --muted: #8da1bd;
+  --rule: #1c3150;
+  --line: #5db9f2;
+  --accent: #5db9f2;
+  --accent-ink: #04101f;
+  --grid: rgba(93, 185, 242, 0.08);
+  --nanduti: #5db9f2;
+  --hero: #071325;
+  --ok: #3dd598;
+  --ok-bg: rgba(61, 213, 152, 0.12);
+  --warn: #f4b547;
+  --warn-bg: rgba(244, 181, 71, 0.12);
+  --err: #f2776f;
+  color-scheme: dark;
+}
