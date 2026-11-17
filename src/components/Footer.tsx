@@ -10,6 +10,7 @@ export function Footer() {
   const links = [
     { label: contactSection.linkedinLabel, href: contact.linkedin.href },
     { label: contactSection.githubLabel, href: contact.github.href },
+    { label: f.repoLabel, href: f.repoUrl },
   ]
   return (
     <footer className="bg-surface">

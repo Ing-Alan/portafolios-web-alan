@@ -34,6 +34,8 @@ export const site: SiteContent = {
   footer: {
     madeWith: 'Hecho con React, TypeScript y Tailwind · Areguá, Paraguay',
     linksLabel: 'Enlaces del footer',
+    repoLabel: 'Código del portafolio',
+    repoUrl: 'https://github.com/Ing-Alan/portafolios-web-alan',
     newTab: '(se abre en una pestaña nueva)',
     backToTop: 'Volver arriba ↑',
   },
