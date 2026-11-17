@@ -8,8 +8,21 @@ export function About() {
     <Section id={t.id} eyebrow={t.eyebrow} title={t.title} tone="hero">
       {/* Biografía: bloque destacado arriba de los párrafos profesionales */}
       <Reveal>
-        <div className="mb-[clamp(28px,4vw,44px)] flex flex-col gap-5 border-l-2 border-accent pl-[clamp(16px,2.5vw,24px)] sm:flex-row sm:items-center">
-          <p className="m-0 max-w-[68ch] font-display text-[clamp(1.08rem,1.9vw,1.3rem)] font-medium leading-[1.55] tracking-[-0.01em]">
+        <div className="mb-[clamp(28px,4vw,44px)] flex flex-col gap-[clamp(18px,3vw,32px)] sm:flex-row sm:items-center">
+          <img
+            src={profile.photo.srcSmall}
+            srcSet={`${profile.photo.srcSmall} 320w, ${profile.photo.src} 640w`}
+            sizes="(min-width: 640px) 168px, 136px"
+            width={profile.photo.width}
+            height={profile.photo.height}
+            loading="lazy"
+            decoding="async"
+            alt={profile.photo.alt}
+            className="h-auto w-[136px] flex-none rounded-[14px] border border-rule bg-surface-2 object-cover shadow-[0_20px_40px_-30px_rgba(5,20,45,.5)] sm:w-[168px]"
+          />
+          <p
+            className="m-0 max-w-[68ch] border-l-2 border-accent pl-[clamp(16px,2.5vw,24px)] font-display text-[clamp(1.08rem,1.9vw,1.3rem)] font-medium leading-[1.55] tracking-[-0.01em]"
+          >
             {profile.bio}
           </p>
         </div>

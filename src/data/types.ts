@@ -60,6 +60,13 @@ export interface Profile {
   }
   /** Biografía corta y personal, arriba de la sección Sobre mí */
   bio: string
+  photo: {
+    src: string
+    srcSmall: string
+    width: number
+    height: number
+    alt: string
+  }
   about: string[]
   workStyle: string[]
 }

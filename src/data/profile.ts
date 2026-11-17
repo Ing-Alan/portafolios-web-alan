@@ -1,4 +1,6 @@
 import type { Profile } from './types'
+import photo from '@/assets/profile/alan.webp'
+import photoSmall from '@/assets/profile/alan-sm.webp'
 
 export const profile: Profile = {
   name: 'Alan Alvarenga',
@@ -25,6 +27,13 @@ export const profile: Profile = {
   },
 
   bio: 'Soy Alan, de Areguá, Paraguay. Aprendo en dos frentes a la vez: en la Facultad Politécnica de la UNA, donde estudio Ciencias Informáticas, y en la operación diaria de sistemas en producción de una empresa de telecomunicaciones. Desde 2025 también desarrollo soluciones web a medida. Cuando un proyecto tiene un fin social, busco la forma de que el presupuesto no sea un obstáculo.',
+  photo: {
+    src: photo,
+    srcSmall: photoSmall,
+    width: 640,
+    height: 800,
+    alt: 'Alan Alvarenga sentado en un café, con anteojos y remera negra, las manos entrelazadas sobre la mesa.',
+  },
 
   about: [
     'Desarrollo sistemas de gestión web a medida para organizaciones y empresas que necesitan dejar atrás el papel y las planillas dispersas. Me encargo del proyecto completo: entiendo la necesidad, diseño la base de datos y la solución, la construyo y la dejo funcionando en la nube.',
