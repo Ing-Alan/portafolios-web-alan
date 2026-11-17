@@ -58,6 +58,8 @@ export interface Profile {
     rows: HeroPanelRow[]
     terminal: { command: string; result: string }
   }
+  /** Biografía corta y personal, arriba de la sección Sobre mí */
+  bio: string
   about: string[]
   workStyle: string[]
 }

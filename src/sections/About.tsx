@@ -6,6 +6,15 @@ import { aboutSection as t } from '@/data/sections'
 export function About() {
   return (
     <Section id={t.id} eyebrow={t.eyebrow} title={t.title} tone="hero">
+      {/* Biografía: bloque destacado arriba de los párrafos profesionales */}
+      <Reveal>
+        <div className="mb-[clamp(28px,4vw,44px)] flex flex-col gap-5 border-l-2 border-accent pl-[clamp(16px,2.5vw,24px)] sm:flex-row sm:items-center">
+          <p className="m-0 max-w-[68ch] font-display text-[clamp(1.08rem,1.9vw,1.3rem)] font-medium leading-[1.55] tracking-[-0.01em]">
+            {profile.bio}
+          </p>
+        </div>
+      </Reveal>
+
       <div className="grid items-start gap-[clamp(28px,4vw,56px)] lg:grid-cols-[minmax(0,1.35fr)_minmax(0,.9fr)]">
         <div className="flex flex-col gap-4">
           {profile.about.map((p, i) => (

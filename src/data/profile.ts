@@ -24,6 +24,8 @@ export const profile: Profile = {
     },
   },
 
+  bio: 'Soy Alan, de Areguá, Paraguay. Aprendo en dos frentes a la vez: en la Facultad Politécnica de la UNA, donde estudio Ciencias Informáticas, y en la operación diaria de sistemas en producción de una empresa de telecomunicaciones. Desde 2025 también desarrollo soluciones web a medida. Cuando un proyecto tiene un fin social, busco la forma de que el presupuesto no sea un obstáculo.',
+
   about: [
     'Desarrollo sistemas de gestión web a medida para organizaciones y empresas que necesitan dejar atrás el papel y las planillas dispersas. Me encargo del proyecto completo: entiendo la necesidad, diseño la base de datos y la solución, la construyo y la dejo funcionando en la nube.',
     'Trabajo con desarrollo asistido por IA, con la arquitectura, la seguridad y la revisión de código a mi cargo. Defino el modelo de datos, las reglas de seguridad y las fases del proyecto, reviso cada cambio y exijo tests antes de dar algo por terminado.',
