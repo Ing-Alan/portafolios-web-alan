@@ -18,7 +18,7 @@ export const experience: ExperienceItem[] = [
     highlights: [
       'Monitoreo de disponibilidad y rendimiento con Nagios y Grafana',
       'Respuesta y escalamiento de incidentes',
-      'Operación de servidores Linux',
+      'Operación de servidores Linux y Windows',
       'Documentación de procesos con AWX, Ansible e InvGate',
     ],
   },
@@ -28,7 +28,7 @@ export const experience: ExperienceItem[] = [
     period: 'sep. – dic. 2024',
     location: 'Asunción',
     current: false,
-    highlights: ['Soporte de primera línea para fibra óptica y TV satelital'],
+    highlights: ['Soporte de primera línea ante inconvenientes de conexiones de dato moviles, fibra óptica y TV satelital'],
   },
 ]
 
