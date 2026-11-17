@@ -19,8 +19,6 @@ export interface SiteContent {
   footer: {
     madeWith: string
     linksLabel: string
-    repoLabel: string
-    repoUrl: string
     newTab: string
     backToTop: string
   }
