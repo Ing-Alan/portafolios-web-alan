@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://alanalvarenga.dev/</loc>
+    <loc>https://alvalan.dev/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://alanalvarenga.dev/proyectos/sistema-odontologico</loc>
+    <loc>https://alvalan.dev/proyectos/sistema-odontologico</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alanalvarenga.dev/proyectos/sistema-parroquial</loc>
+    <loc>https://alvalan.dev/proyectos/sistema-parroquial</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alanalvarenga.dev/proyectos/vacaciones-y-permisos</loc>
+    <loc>https://alvalan.dev/proyectos/vacaciones-y-permisos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

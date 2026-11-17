@@ -4,7 +4,7 @@
 
 Portafolio personal de **Alan Alvarenga**, desarrollador full stack y supervisor de sistemas en producción en Areguá, Paraguay. Muestra sistemas de gestión web reales, construidos a medida y funcionando en producción, con casos de estudio de cada uno.
 
-**🌐 Sitio:** [alanalvarenga.dev](https://alanalvarenga.dev)
+**🌐 Sitio:** [alvalan.dev](https://alvalan.dev)
 
 ## Qué tiene
 
@@ -72,4 +72,4 @@ Todo el texto del sitio vive en `src/data/`. Para cambiar una frase se edita el 
 
 - LinkedIn: [alan-alvarenga-ojeda](https://www.linkedin.com/in/alan-alvarenga-ojeda)
 - GitHub: [Ing-Alan](https://github.com/Ing-Alan)
-- O desde el formulario de [alanalvarenga.dev](https://alanalvarenga.dev/#contacto)
+- O desde el formulario de [alvalan.dev](https://alvalan.dev/#contacto)

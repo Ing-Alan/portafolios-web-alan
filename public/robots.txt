@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://alanalvarenga.dev/sitemap.xml
+Sitemap: https://alvalan.dev/sitemap.xml
